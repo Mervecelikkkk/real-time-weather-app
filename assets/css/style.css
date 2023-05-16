@@ -565,7 +565,7 @@ article.container::before {
   margin-inline: auto;
 }
 
-.current-weather-card > .body-3 {
+.current-weather-card>.body-3 {
   text-transform: capitalize;
 }
 
