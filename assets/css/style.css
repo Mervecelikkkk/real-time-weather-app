@@ -765,9 +765,10 @@ margin-block: 12px;
   width: 100%;
   height: 100%;
   background-color: var(--background);
-  display: grid;
+  /* display: grid; */
   place-items: center;
   z-index: 1;
+  display: none;
 }
 
 .loading::before {
@@ -776,7 +777,8 @@ margin-block: 12px;
   height: 48px;
   border: 4px solid var(--on-background);
   border-block-start-color: transparent ;
-  
+  border-radius: var(--radius-circle);
+  animation: loading 500ms linear infinite;
 }
 
 
