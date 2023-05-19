@@ -1,22 +1,22 @@
 
 'use strict';
 
-const api_key="279128f858b85bc0e41a96d613a42d70";
+const api_key = "279128f858b85bc0e41a96d613a42d70";
 
-export const fetchData=function(URL, callback) {
+export const fetchData = function (URL, callback) {
     fetch(`${URL}&appid=${api_key}`)
-    .then(res=>res.json())
-    .then(data=>callback(data));
+        .then(res => res.json())
+        .then(data => callback(data));
 }
 
-export const url= {
+export const url = {
     currentWeather(lan, lon) {
-     return `https://api.openweathermap.org/data/2.5/weather?${lat}&${lon}&units=metric`
+        return `https://api.openweathermap.org/data/2.5/weather?${lat}&${lon}&units=metric`
     },
     forecast(lat, lon) {
         return `https://api.openweathermap.org/data/2.5/forecast?${lat}&${lon}`
     },
-    airPollution(lat ,lon) {
+    airPollution(lat, lon) {
         return `https://api.openweathermap.org/data/2.5/air_pollution?${lat}&${lon}&units=metric`
     },
     reverseGeo(lat, lon) {

@@ -1,22 +1,22 @@
 'use strict';
 
-import { fetchData , url } from './api.js';
+import { fetchData, url } from './api.js';
 import * as module from './module.js';
 
 //elements -> NodeList 
 //eventType -> string 
 //Function -> callback
 
-const addEventonElements = function (elements , eventType, callback ) {
-    for (const element of elements) element.addEventListener(eventType,callback);
-} 
+const addEventonElements = function (elements, eventType, callback) {
+    for (const element of elements) element.addEventListener(eventType, callback);
+}
 //TOGGLE SEARCH IN MOBILE DEVICES
 
 const searchView = document.querySelector("[data-search-view");
 const searchTogglers = document.querySelectorAll("[data-search-toggler]");
 
 const toggleSearch = () => searchView.classList.toggle("active");
-addEventonElements(searchTogglers , "click" , toggleSearch);
+addEventonElements(searchTogglers, "click", toggleSearch);
 
 //SEARCH INTERGRATION 
 
@@ -29,97 +29,97 @@ const searchTimeoutDuration = 500;
 searchField.addEventListener("input", function () {
     searchTimeout ?? clearTimeout(searchTimeout);
 
-    if ( !searchField.value) {
+    if (!searchField.value) {
         searchResult.classList.remove("active");
         searchResult.innerHTML = "";
         searchField.classList.remove("searching");
-    }else{
+    } else {
         searchField.classList.add("searching");
     }
 
-    if(searchField.value) {
-        searchTimeout = setTimeout (() => {
+    if (searchField.value) {
+        searchTimeout = setTimeout(() => {
             fetchData(url.geo(searchField.value), function (locations) {
                 searchField.classList.remove("searhing");
                 searchResult.classList.add("active");
                 searchResult.innerHTML = `<ul class="view-list" data-search-list></ul>`;
 
-                  const items=[];
+                const items = [];
 
-                  for(const { name, lat, lon, country, state} of locations) {
-                      const searchItem = doucment.createElement("li");
-                      searchItem.classListt.add("li");
-                      searchItem.classList.add("view-item");
+                for (const { name, lat, lon, country, state } of locations) {
+                    const searchItem = doucment.createElement("li");
+                    searchItem.classListt.add("li");
+                    searchItem.classList.add("view-item");
 
-                      searchItem.innerHTML = `
+                    searchItem.innerHTML = `
                       <span class="m-icon">Location-on</span>
                           <div>
                               <p class="itme-title">${name}</p>
                               <p class="label-2 item-subtitle">$${state || ""} ${country}</p>
                           </div>     
                       <a href="#/weather?lat=${lat}&lon=${lon}" class="item-link has-state" aria-label="${name} weather" data-search-toggler></a>`;
-                       
-                      searchResult.querySelector("[data-search-list]").appendChild(searchItem);
-                      items.push(searchItem.querySelector("[data-search-toggler]"));
-                    }
 
-                    addEventonElements(items, "click", function () {
+                    searchResult.querySelector("[data-search-list]").appendChild(searchItem);
+                    items.push(searchItem.querySelector("[data-search-toggler]"));
+                }
+
+                addEventonElements(items, "click", function () {
                     toggleSearch();
                     searchResult.classList.remove("active");
-                   })
+                })
 
-                  });
-                }, searchTimeoutDuration );
-            } 
-        });
+            });
+        }, searchTimeoutDuration);
+    }
+});
 
-        const container = document.querySelector("[data-conainer]");
-        const loading = document.querySelector("[data-loading]");
-        const currentLocationBtn = document.querySelector("[data-current-location-btn]");
-      
-        const errorContent = document.querySelector("[data-error-content]");
+const container = document.querySelector("[data-conainer]");
+const loading = document.querySelector("[data-loading]");
+const currentLocationBtn = document.querySelector("[data-current-location-btn]");
+
+const errorContent = document.querySelector("[data-error-content]");
 
 
-        export const updateWeather = function (lat, lon) {
-            loading.style.display =  "grid";
-            container.style.overflowY = "hidden";
-            container.classList.remove("fade-in");
-            errorContent.style.display = "none";
+export const updateWeather = function (lat, lon) {
+    loading.style.display = "grid";
+    container.style.overflowY = "hidden";
+    container.classList.remove("fade-in");
+    errorContent.style.display = "none";
 
-            const currenetWeatherSetion = document.querySelector("[data-current-weather]");
-            const highlightSection = document.querySelector("[data-highlights]");
-            const hourlySection = document.querySelector("[data-hourly-forecast]");
-            const forecastSection = document.querySelector("[data-5-day-forecast]");
+    const currentWeatherSection = document.querySelector("[data-current-weather]");
+    const highlightSection = document.querySelector("[data-highlights]");
+    const hourlySection = document.querySelector("[data-hourly-forecast]");
+    const forecastSection = document.querySelector("[data-5-day-forecast]");
 
-            currenetWeatherSetion.innerHTML = "";
-            highlightSection.innerHTML = "";
-            hourlySection.innerHTML = "";
-            forecastSection.innerHTML = "";
+    currentWeatherSection.innerHTML = "";
+    highlightSection.innerHTML = "";
+    hourlySection.innerHTML = "";
+    forecastSection.innerHTML = "";
 
-            if(window.location.hash == '#/current-location') {
-                currentLocationBtn.setAttribute("disbaled", "");
-            }
-                else{
-                    currentLocationBtn.removeAttribute("disabled");
-                }
-            
-                //CURENT WEATHER SECTION
-                
-                fetchData(url.currentWeather(lat , lon), function (currentWeather){
-                 const {
-                    weather,
-                    dt: dateUnix,
-                    sys : { sunrise : sunriseUnixUTC , sunet : sunsetUnixUTC },
-                    main : { temp , feels_like , pressure , humidity },
-                    visibility,
-                    timezone
-                 } = currentWeather
-                 
-                const [{ description , icon }] = weather;
+    if (window.location.hash == '#/current-location') {
+        currentLocationBtn.setAttribute("disabled", "");
+    }
+    else {
+        currentLocationBtn.removeAttribute("disabled");
+    }
 
-                const card=document.createElement("div");
-                card.classList.add("card", "card-ig", "current-weather-card");
-                card.innerHTML = ` 
+    //CURENT WEATHER SECTION
+
+    fetchData(url.currentWeather(lat, lon), function (currentWeather) {
+        const {
+            weather,
+            dt: dateUnix,
+            sys: { sunrise: sunriseUnixUTC, sunset: sunsetUnixUTC },
+            main: { temp, feels_like, pressure, humidity },
+            visibility,
+            timezone
+        } = currentWeather
+
+        const [{ description, icon }] = weather;
+
+        const card = document.createElement("div");
+        card.classList.add("card", "card-lg", "current-weather-card");
+        card.innerHTML = ` 
                 <h2 class="title-2 card-title">Now</h2>
 
                 <div class="weapper">
@@ -148,26 +148,26 @@ searchField.addEventListener("input", function () {
                     </li>
     
                 </ul>`;
-                
-                fetchData(url.reverseGeo(lat, lon), function([{name, country}]) {
-                  card.querySelector("[data-location]").innerHTML = `${name}, ${country} `;
-                });
+
+        fetchData(url.reverseGeo(lat, lon), function ([{ name, country }]) {
+            card.querySelector("[data-location]").innerHTML = `${name}, ${country} `;
+        });
 
 
-                currenetWeatherSetion.appendChild(card);
+        currentWeatherSection.appendChild(card);
 
-                // TODAYS HIGHLIGHTS 
+        // TODAYS HIGHLIGHTS 
 
-                fetchData(url.airPollution(lat, lon),  function (airPollution) {
-                  
-                    const [{
-                        main: {aqi},
-                        components: { no2, o3, so2, pm2_5 }
-                    }] = airPollution.list
+        fetchData(url.airPollution(lat, lon), function (airPollution) {
 
-                    const card = document.createElement("div");
-                    card.classList.add("card", "card-lg");
-                    card.innerHTML = `
+            const [{
+                main: { aqi },
+                components: { no2, o3, so2, pm2_5 }
+            }] = airPollution.list
+
+            const card = document.createElement("div");
+            card.classList.add("card", "card-lg");
+            card.innerHTML = `
                     <h2 class="title-2" id="highlights-label">Todays Highlights</h2>
 
                      <div class="highlight-list">
@@ -232,7 +232,7 @@ searchField.addEventListener("input", function () {
 
                             <div>
                                 <p class="label-1">Sunrise</p>
-                                <p class="title-1">${module.getTime(sunriseUnixUTC,timezone)}</p>
+                                <p class="title-1">${module.getTime(sunriseUnixUTC, timezone)}</p>
                             </div>
                         </div>
 
@@ -241,7 +241,7 @@ searchField.addEventListener("input", function () {
 
                             <div>
                                 <p class="label-1">Sunset</p>
-                                <p class="title-1">${module.getTime(sunsetUnixUTC,timezone)}</p>
+                                <p class="title-1">${module.getTime(sunsetUnixUTC, timezone)}</p>
 
                             </div>
                         </div>
@@ -298,20 +298,20 @@ searchField.addEventListener("input", function () {
                 </div>
                     </div>`;
 
-                    highlightSection.appendChild(card);
+            highlightSection.appendChild(card);
 
-                });
+        });
 
-                // 24 HOURS FORECAST SECTION 
+        // 24 HOURS FORECAST SECTION 
 
-                fetchData(url.forecast(lat, lon), function (forecast) {
-                   
-                    const { 
-                       list : forecastList,
-                       city: {timezone}
-                    } = forecast;
+        fetchData(url.forecast(lat, lon), function (forecast) {
 
-                    hourlySection.innerHTML = ` 
+            const {
+                list: forecastList,
+                city: { timezone }
+            } = forecast;
+
+            hourlySection.innerHTML = ` 
                     <h2 class="title-2">Today at</h2>
 
                     <div class="slider-container">
@@ -352,26 +352,26 @@ searchField.addEventListener("input", function () {
                     </div>
                     `;
 
-                    for( const [index, data] of forecastList.entries()) {
+            for (const [index, data] of forecastList.entries()) {
 
-                       if(index > 7 )  break;
+                if (index > 7) break;
 
-                       const {
-                        dt: dateTimeUnix,
-                        main: { temp },
-                        weather,
-                        wind: { deg: windDirection, speed: windSpeed }
-                       } = data
+                const {
+                    dt: dateTimeUnix,
+                    main: { temp },
+                    weather,
+                    wind: { deg: windDirection, speed: windSpeed }
+                } = data
 
-                     const [{ icon, description }] = weather
+                const [{ icon, description }] = weather
 
-                     const tempLi = document.createElement('li');
-                     tempLi.classList.add("slider-item")
+                const tempLi = document.createElement('li');
+                tempLi.classList.add("slider-item")
 
-                     tempLi.innerHTML = `                     
+                tempLi.innerHTML = `                     
                      <div class="card card-sm slider-card">
                        
-                     <p class="body-3">${module.getHours(dateTimeUnix , timezone )}</p>
+                     <p class="body-3">${module.getHours(dateTimeUnix, timezone)}</p>
                  
                      <img src="./assets/images/weather_icons/${icon}.png" width="48" height="48" loading="lazy" alt="${description}" class="weather-icon" title="${description}">
                  
@@ -379,34 +379,34 @@ searchField.addEventListener("input", function () {
                  
                    </div>
                      `;
-                      
-                     hourlySection.querySelector("[data-temp]").appendChild(tempLi);
 
-                     const windLi = document.createElement("li");
-                     windLi.classList.add("slider-itm");
+                hourlySection.querySelector("[data-temp]").appendChild(tempLi);
 
-                     windLi.innerHTML = `
+                const windLi = document.createElement("li");
+                windLi.classList.add("slider-itm");
+
+                windLi.innerHTML = `
                      <div class="card card-sm slider-card">
                        
-                     <p class="body-3">${module.getHours(dateTimeUnix , timezone )}</p>
+                     <p class="body-3">${module.getHours(dateTimeUnix, timezone)}</p>
                  
-                     <img src="./assets/images/weather_icons/01n.png" width="48" height="48" loading="lazy" alt="direction" class="weather-icon" style="transform:rotate${windDirection- 180}deg">
+                     <img src="./assets/images/weather_icons/01n.png" width="48" height="48" loading="lazy" alt="direction" class="weather-icon" style="transform:rotate${windDirection - 180}deg">
                  
                      <p class="body-3">${praseInt(module.mps_to_kmh(windSpeed))}&deg;</p>
                  
                    </div>
                      `;
 
-                     hourlySection.querySelector("[data-wind]").appendChild(windLi);
+                hourlySection.querySelector("[data-wind]").appendChild(windLi);
 
-                    }
-                
-               });
+            }
+
+        });
 
 
-            //5-DAY FORECAST SECTION
+        //5-DAY FORECAST SECTION
 
-            forecastSection.innerHTML = `
+        forecastSection.innerHTML = `
             <h2 class="title-2" id="forecast-label">5 Days Forecast</h2>
                    
             <div class="card card-lg forecast-card">
@@ -415,20 +415,20 @@ searchField.addEventListener("input", function () {
             </div>
             `;
 
-           for(let i= 7, len = forecastList.length; i<len; i+=8) {
-                 
-               const {
+        for (let i = 7, len = forecastList.length; i < len; i += 8) {
+
+            const {
                 main: { temp_max },
                 weather,
                 dt_txt
-               } = forecastList[i];
-               const [{ icon, description }] = weather
-               const data = new Date(dt-txt);
+            } = forecastList[i];
+            const [{ icon, description }] = weather
+            const data = new Date(dt - txt);
 
-               const li=document.createElement('li');
-               li.classList.add("card-item");
+            const li = document.createElement('li');
+            li.classList.add("card-item");
 
-               li.innerHTML = `
+            li.innerHTML = `
                <div class="icon-wrapper">
                       <img src="./assets/images/weather_icons/${icon}.png"
                       width="36" height="36" alt="${description}" class="weather-icon"  title="${description}">
@@ -445,30 +445,29 @@ searchField.addEventListener("input", function () {
                 </div>
                `;
 
-               forecastSection.querySelector("[data-forecast-list]").appendChild(li);
-           }
+            forecastSection.querySelector("[data-forecast-list]").appendChild(li);
+        }
 
-           loading.style.display =  "none";
-           container.style.overflowY = "overlay";
-           container.classList.add ("fade-in");
+        loading.style.display = "none";
+        container.style.overflowY = "overlay";
+        container.classList.add("fade-in");
 
-            });
-            
-            }
+    });
 
-            export const error404 = () =>
-                errorContent.style.display = "flex";
-             
+}
 
-
-           
-
-            
-        
+export const error404 = () =>
+    errorContent.style.display = "flex";
 
 
 
 
 
-        
-                        
+
+
+
+
+
+
+
+
