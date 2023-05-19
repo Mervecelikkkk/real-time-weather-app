@@ -375,7 +375,7 @@ export const updateWeather = function (lat, lon) {
                  
                      <img src="./assets/images/weather_icons/${icon}.png" width="48" height="48" loading="lazy" alt="${description}" class="weather-icon" title="${description}">
                  
-                     <p class="body-3">${praseInt(temp)}&deg;</p>
+                     <p class="body-3">${parseInt(temp)}&deg;</p>
                  
                    </div>
                      `;
@@ -392,7 +392,7 @@ export const updateWeather = function (lat, lon) {
                  
                      <img src="./assets/images/weather_icons/01n.png" width="48" height="48" loading="lazy" alt="direction" class="weather-icon" style="transform:rotate${windDirection - 180}deg">
                  
-                     <p class="body-3">${praseInt(module.mps_to_kmh(windSpeed))}&deg;</p>
+                     <p class="body-3">${parseInt(module.mps_to_kmh(windSpeed))}&deg;</p>
                  
                    </div>
                      `;
@@ -423,7 +423,7 @@ export const updateWeather = function (lat, lon) {
                 dt_txt
             } = forecastList[i];
             const [{ icon, description }] = weather
-            const data = new Date(dt - txt);
+            const date = new Date(dt_txt);
 
             const li = document.createElement('li');
             li.classList.add("card-item");
@@ -440,7 +440,7 @@ export const updateWeather = function (lat, lon) {
 
                      <p class="label-1">${date.getDate()} ${module.monthNames[date.getUTCMonth()]}</p>
 
-                     <p class="label-1">${module.weekdayNames[date.getUTCDay()]}</p>
+                     <p class="label-1">${module.weekDayNames[date.getUTCDay()]}</p>
 
                 </div>
                `;

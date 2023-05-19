@@ -1,7 +1,7 @@
 
 'use strict';
 
-export const weekdayNames = [
+export const weekDayNames = [
   "Sunday",
   "Monday",
   "Tuesday",
@@ -28,7 +28,7 @@ export const monthNames = [
 
 export const getDate = function(dataUnix , timezone )  {
     const date = new Date((dataUnix + timezone ) * 1000 );
-    const weekDayName = weekdayNames[data.getUTCDay()];
+    const weekDayName = weekDayNames[data.getUTCDay()];
     const monthName = monthNames[date.getUTCMonth()];
 
 return `${weekDayName} ${date.getUTCDate()}, ${monthName}`;
