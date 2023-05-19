@@ -10,14 +10,14 @@ export const fetchData = function (URL, callback) {
 }
 
 export const url = {
-    currentWeather(lan, lon) {
+    currentWeather(lat, lon) {
         return `https://api.openweathermap.org/data/2.5/weather?${lat}&${lon}&units=metric`
     },
     forecast(lat, lon) {
-        return `https://api.openweathermap.org/data/2.5/forecast?${lat}&${lon}`
+        return `https://api.openweathermap.org/data/2.5/forecast?${lat}&${lon}&units=metric`
     },
     airPollution(lat, lon) {
-        return `https://api.openweathermap.org/data/2.5/air_pollution?${lat}&${lon}&units=metric`
+        return `https://api.openweathermap.org/data/2.5/air_pollution?${lat}&${lon}`
     },
     reverseGeo(lat, lon) {
         return `https://api.openweathermap.org/geo/1.0/reverse?${lat}&${lon}&limit=5`

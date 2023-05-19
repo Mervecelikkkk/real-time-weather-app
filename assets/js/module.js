@@ -8,26 +8,26 @@ export const weekDayNames = [
   "Wednesday",
   "Thursday",
   "Friday",
-  "Satueday"
+  "Saturday"
 ];
 
 export const monthNames = [
-    "January",
-    "Febraury",
-    "March",
-    "April",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
     "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
 ]
 
-export const getDate = function(dataUnix , timezone )  {
-    const date = new Date((dataUnix + timezone ) * 1000 );
+export const getDate = function(dateUnix , timezone )  {
+    const date = new Date((dateUnix + timezone ) * 1000 );
     const weekDayName = weekDayNames[data.getUTCDay()];
     const monthName = monthNames[date.getUTCMonth()];
 
@@ -41,6 +41,14 @@ export const getTime = function(timeUnix, timezone) {
     const period = hours >= 12 ? "PM" : "AM"; 
 
     return `${hours % 12 || 12 }:${minutes} ${period}`;
+}
+
+export const getHours = function(timeUnix, timezone) {
+  const date =  new Date((timeUnix + timezone ) * 1000 ) ;
+  const hours  = date.getUTCHours();
+  const period = hours >= 12 ? "PM" : "AM"; 
+
+  return `${hours % 12 || 12 } ${period}`;
 }
 
 export const mps_to_kmh = mps => {
