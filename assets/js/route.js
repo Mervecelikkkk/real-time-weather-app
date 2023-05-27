@@ -6,10 +6,10 @@ const defaultLocation = "#/weather?lat=51.5073219&lon=-0.1276474"; //London
 
 const currentLocation = function() {
    window.navigator.geolocation.getCurrentPosition(res => {
-    const { latitude , longitude } = res.coords; 
+    const { latitude, longitude } = res.coords; 
 
     updateWeather(`lat=${latitude}`, `lon=${longitude}`);
-   },err => {
+   }, err => {
     window.location.hash = defaultLocation;
    });
 }
@@ -17,8 +17,8 @@ const currentLocation = function() {
 const searchedLocation = query => updateWeather( ...query.split("&"));
 
 const routes = new Map ([
-    ["/current-location" , currentLocation],
-    ["/weather" , searchedLocation ]
+    ["/current-location", currentLocation],
+    ["/weather", searchedLocation ]
 ])
 
 // QUERY IS THE USER_SEARCH ( STRING )

@@ -247,7 +247,7 @@ body {
   animation: ripple 250ms ease forwards;
 }
 
-@key-frames ripple {
+@keyframes ripple {
   0% {
     clip-path: circle (0% at 50% 50%);
   }
@@ -341,7 +341,7 @@ body {
 }
 
 .fade-in {
-  animation: fade-in 250ms else forwards;
+  animation: fade-in 250ms ease forwards;
 }
 
 @keyframes fade-in {

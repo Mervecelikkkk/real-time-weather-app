@@ -41,22 +41,21 @@ searchField.addEventListener("input", function () {
     if (searchField.value) {
         searchTimeout = setTimeout(() => {
             fetchData(url.geo(searchField.value), function (locations) {
-                searchField.classList.remove("searhing");
+                searchField.classList.remove("searching");
                 searchResult.classList.add("active");
                 searchResult.innerHTML = `<ul class="view-list" data-search-list></ul>`;
 
                 const items = [];
 
                 for (const { name, lat, lon, country, state } of locations) {
-                    const searchItem = doucment.createElement("li");
-                    searchItem.classListt.add("li");
+                    const searchItem = document.createElement("li");
                     searchItem.classList.add("view-item");
 
                     searchItem.innerHTML = `
                       <span class="m-icon">Location-on</span>
                           <div>
                               <p class="itme-title">${name}</p>
-                              <p class="label-2 item-subtitle">$${state || ""} ${country}</p>
+                              <p class="label-2 item-subtitle">${state || ""} ${country}</p>
                           </div>     
                       <a href="#/weather?lat=${lat}&lon=${lon}" class="item-link has-state" aria-label="${name} weather" data-search-toggler></a>`;
 
@@ -74,7 +73,7 @@ searchField.addEventListener("input", function () {
     }
 });
 
-const container = document.querySelector("[data-conainer]");
+const container = document.querySelector("[data-container]");
 const loading = document.querySelector("[data-loading]");
 const currentLocationBtn = document.querySelector("[data-current-location-btn]");
 
@@ -82,9 +81,9 @@ const errorContent = document.querySelector("[data-error-content]");
 
 
 export const updateWeather = function (lat, lon) {
-    loading.style.display = "grid";
-    container.style.overflowY = "hidden";
-    container.classList.remove("fade-in");
+    // loading.style.display = "grid";
+    container.style.overflowY="hidden";
+    // container.classList.remove("fade-in");
     errorContent.style.display = "none";
 
     const currentWeatherSection = document.querySelector("[data-current-weather]");
@@ -139,7 +138,7 @@ export const updateWeather = function (lat, lon) {
                     <li class="meta-item">
                         <span class="m-icon">calender_today</span>
     
-                        <p class="title-3 meta-text">T${module.getDate(dateUnix, timezone)}</p>
+                        <p class="title-3 meta-text">${module.getDate(dateUnix, timezone)}</p>
                     </li>
     
                     <li class="meta-item">
