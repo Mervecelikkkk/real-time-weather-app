@@ -52,7 +52,7 @@ searchField.addEventListener("input", function () {
                     searchItem.classList.add("view-item");
 
                     searchItem.innerHTML = `
-                      <span class="m-icon">Location-on</span>
+                      <span class="m-icon">location_on</span>
                           <div>
                               <p class="itme-title">${name}</p>
                               <p class="label-2 item-subtitle">${state || ""} ${country}</p>
@@ -82,7 +82,7 @@ const errorContent = document.querySelector("[data-error-content]");
 
 export const updateWeather = function (lat, lon) {
     // loading.style.display = "grid";
-    container.style.overflowY="hidden";
+    // container.style.overflowY="hidden";
     // container.classList.remove("fade-in");
     errorContent.style.display = "none";
 
@@ -136,7 +136,7 @@ export const updateWeather = function (lat, lon) {
                 <ul class="meta-list">
     
                     <li class="meta-item">
-                        <span class="m-icon">calender_today</span>
+                        <span class="m-icon">calendar_today</span>
     
                         <p class="title-3 meta-text">${module.getDate(dateUnix, timezone)}</p>
                     </li>
@@ -194,7 +194,7 @@ export const updateWeather = function (lat, lon) {
 
                                  <p class="title-1">${so2.toPrecision(3)}</p>
 
-                                 <p class="label -1">PM<sub>2.5</sub></p>
+                                 <p class="label -1">SO<sub>2</sub></p>
 
                                 </li>
                          
@@ -202,7 +202,7 @@ export const updateWeather = function (lat, lon) {
 
                                  <p class="title-1">${no2.toPrecision(3)}</p>
 
-                                 <p class="label -1">PM<sub>2.5</sub></p>
+                                 <p class="label -1">NO<sub>2</sub></p>
 
                                 </li>
 
@@ -210,7 +210,7 @@ export const updateWeather = function (lat, lon) {
 
                                    <p class="title-1">${o3.toPrecision(3)}</p>
 
-                                   <p class="label -1">PM<sub>2.5</sub></p>
+                                   <p class="label -1">O<sub>3</sub></p>
 
                                 </li>
                                </ul>
@@ -383,14 +383,14 @@ export const updateWeather = function (lat, lon) {
                 hourlySection.querySelector("[data-temp]").appendChild(tempLi);
 
                 const windLi = document.createElement("li");
-                windLi.classList.add("slider-itm");
+                windLi.classList.add("slider-item");
 
                 windLi.innerHTML = `
                      <div class="card card-sm slider-card">
                        
                      <p class="body-3">${module.getHours(dateTimeUnix, timezone)}</p>
                  
-                     <img src="./assets/images/weather_icons/01n.png" width="48" height="48" loading="lazy" alt="direction" class="weather-icon" style="transform:rotate${windDirection - 180}deg">
+                     <img src="./assets/images/weather_icons/01n.png" width="48" height="48" loading="lazy" alt="direction" class="weather-icon" style="transform:rotate(${windDirection - 180}deg)">
                  
                      <p class="body-3">${parseInt(module.mps_to_kmh(windSpeed))}&deg;</p>
                  
@@ -401,7 +401,6 @@ export const updateWeather = function (lat, lon) {
 
             }
 
-        });
 
 
         //5-DAY FORECAST SECTION
@@ -453,7 +452,8 @@ export const updateWeather = function (lat, lon) {
         container.classList.add("fade-in");
 
     });
-
+    
+});
 }
 
 export const error404 = () =>
